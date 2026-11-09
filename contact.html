@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Website character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Make website responsive on phones and computers -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Website description -->
+    <meta name="description"
+        content="Contact EPADR Mageragere Winners School for information about our nursery and primary education.">
+
+    <!-- Website title -->
+    <title>Contact Us | EPADR Mageragere Winners School</title>
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet" href="stylecss.css">
+
+    <!-- Connect JavaScript -->
+    <script src="script.js" defer></script>
+
+</head>
+
+<body>
+
+    <!-- ====================================== -->
+    <!-- HEADER AND NAVIGATION -->
+    <!-- ====================================== -->
+
+    <header class="header">
+
+        <!-- School name -->
+        <a class="brand" href="index.html">
+
+            EPADR MAGERAGERE
+
+            <span>
+                <br>
+                WINNERS SCHOOL
+            </span>
+
+        </a>
+
+        <!-- Mobile menu button -->
+        <button
+            id="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav">
+
+            ☰ Menu
+
+        </button>
+
+        <!-- Navigation links -->
+        <nav id="nav">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+            <a href="academics.html">
+                Academics
+            </a>
+
+            <a href="admissions.html">
+                Admissions
+            </a>
+
+            <a href="contact.html" aria-current="page">
+                Contact Us
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ====================================== -->
+    <!-- MAIN CONTACT PAGE -->
+    <!-- ====================================== -->
+
+    <main>
+
+        <!-- Contact introduction -->
+        <section class="section">
+
+            <h2>
+                Contact Our School
+            </h2>
+
+            <p>
+                We welcome questions from parents, guardians,
+                and members of our community.
+            </p>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- SCHOOL INFORMATION -->
+        <!-- ====================================== -->
+
+        <section class="section light">
+
+            <h2>
+                School Information
+            </h2>
+
+            <div class="cards">
+
+                <!-- School name -->
+                <article class="card">
+
+                    <h3>
+                        School
+                    </h3>
+
+                    <p>
+                        EPADR Mageragere Winners School
+                    </p>
+
+                </article>
+
+
+                <!-- School location -->
+                <article class="card">
+
+                    <h3>
+                        Location
+                    </h3>
+
+                    <p>
+                        Mageragere,Nyarugenge,Rwanda
+                    </p>
+
+                </article>
+
+
+                <!-- School phone -->
+                <article class="card">
+
+                    <h3>
+                        Phone
+                    </h3>
+
+                    <p>
+                        0788851612 / 0788650170
+                    </p>
+
+                </article>
+
+
+                <!-- School email -->
+                <article class="card">
+
+                    <h3>
+                        Email
+                    </h3>
+
+                    <p>
+                        epadrmageragerewinnerschoool@gmail.com
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- CONTACT FORM -->
+        <!-- ====================================== -->
+
+        <section class="section">
+
+            <h2>
+                Send Us a Message
+            </h2>
+
+            <p>
+                Please complete the form below.
+                Our school welcomes your questions and enquiries.
+            </p>
+
+
+            <!--
+                IMPORTANT:
+                The id contact-form connects this form
+                to the JavaScript in script.js.
+            -->
+
+            <form id="contact-form">
+
+                <div class="formdiv">
+
+
+                    <!-- Name -->
+                    <label for="name">
+                        Your Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+
+                    <!-- Email -->
+                    <label for="email">
+                        Your Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+
+
+                    <!-- Subject -->
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="Enter message subject"
+                    >
+
+
+                    <!-- Message -->
+                    <label for="message">
+                        Your Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="5"
+                        placeholder="Write your message here..."
+                        required
+                    ></textarea>
+
+
+                    <!-- Submit button -->
+                    <button
+                        class="send-message"
+                        type="submit">
+
+                        Send Message
+
+                    </button>
+
+
+                    <!--
+                        JavaScript will display:
+                        Sending your message...
+                        Success message
+                        Error message
+                    -->
+
+                    <p
+                        id="form-message"
+                        role="status"
+                        aria-live="polite">
+                    </p>
+
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+    </main>
+
+    <!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- SCHOOL INFORMATION -->
+        <div class="footer-column">
+
+            <h3>EPADR MAGERAGERE WINNERS SCHOOL</h3>
+
+            <p>
+                Providing quality education, discipline,
+                and developing talents for a bright future.
+            </p>
+
+       
+
+        </div>
+
+        <!-- SITEMAP -->
+        <div class="footer-column">
+
+            <h3>Sitemap</h3>
+
+            <nav id="nav">
+                   <a href="index.html">Home</a>
+                   <a href="about.html">About Us</a>
+                   <a href="academics.html">Academics</a>
+                   <a href="admissions.html">Admissions</a>
+            </nav>
+
+        </div>
+
+        <!-- CONTACT -->
+        <div class="footer-column">
+
+            <h3>Contact Us</h3>
+
+            <p>📍 Mageragere, Kigali, Rwanda</p>
+            <p>📞 +250 788 851 612/ +250 788 650 170</p>
+            <p>✉️ epadrmageragerewinnerschoool@gmail.com</p>
+
+        </div>
+
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="footer-bottom">
+        <p>
+            © <span id="year">2026</span>
+            EPADR MAGERAGERE WINNERS SCHOOL.
+            All Rights Reserved.
+        </p>
+    </div>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" title="Back to Top">
+        ↑
+    </button>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
+    
