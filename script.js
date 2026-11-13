@@ -93,7 +93,7 @@ if (contactForm) {
         try {
 
             // Send information to backend
-            const response = await fetch("/api/contact", {
+            const response = await fetch("https://epadr-mageragere-winners-school.onrender.com/api/contact", {
 
                 method: "POST",
 
