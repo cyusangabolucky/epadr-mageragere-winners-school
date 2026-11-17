@@ -1,71 +1,117 @@
-
+```javascript
 // ==========================================
 // EPADR MAGERAGERE WINNERS SCHOOL
 // BACKEND SERVER
 // ==========================================
 
-// Import required packages
+
+// 1. IMPORT REQUIRED PACKAGES
+
 const express = require("express");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const path = require("path");
 
-// Load environment variables
+
+// 2. LOAD ENVIRONMENT VARIABLES
+
 dotenv.config();
 
-// Create Express application
+
+// 3. CREATE EXPRESS APPLICATION
+
 const app = express();
 
-// Middleware
+
+// 4. MIDDLEWARE
+
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
+
+// Allow GitHub Pages and localhost to communicate
+app.use(cors({
+
+    origin: [
+        "https://cyusangabolucky.github.io",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "http://localhost:3000"
+    ]
+
+}));
+
 
 // Serve frontend files from public folder
 app.use(express.static(path.join(__dirname, "public")));
 
+
 // ==========================================
-// EMAIL CONFIGURATION
+// 5. EMAIL CONFIGURATION
 // ==========================================
 
 const transporter = nodemailer.createTransport({
+
     service: "gmail",
 
     auth: {
+
         user: process.env.EMAIL_USER,
+
         pass: process.env.EMAIL_PASS
+
     }
+
 });
 
+
 // ==========================================
-// CONTACT FORM API
+// 6. CONTACT FORM API
 // ==========================================
 
 app.post("/api/contact", async (req, res) => {
 
     try {
 
-        // Get information from the contact form
-        const { name, email, subject, message } = req.body;
+        // Receive information from frontend
+        const { name, email, tel, message } = req.body;
+
 
         // Check required fields
-        if (!name || !email || !message) {
+        if (!name || !email || !tel || !message) {
+
             return res.status(400).json({
+
                 success: false,
-                message: "Please complete all required fields."
+
+                message: "Please complete all fields."
+
             });
+
         }
 
-        // Basic email validation
+
+        // Validate email address
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailPattern.test(email)) {
+
             return res.status(400).json({
+
                 success: false,
+
                 message: "Please enter a valid email address."
+
             });
+
         }
 
-        // Send email to the school
+
+        // ==================================
+        // SEND EMAIL TO SCHOOL
+        // ==================================
+
         await transporter.sendMail({
 
             from: process.env.EMAIL_USER,
@@ -74,42 +120,64 @@ app.post("/api/contact", async (req, res) => {
 
             replyTo: email,
 
-            subject: subject || "New School Website Enquiry",
+            subject: "New Contact Message - EPADR School",
 
             text: `
-New message from EPADR MAGERAGERE WINNERS SCHOOL website.
+
+NEW MESSAGE FROM EPADR MAGERAGERE WINNERS SCHOOL WEBSITE
+
+----------------------------------
 
 Name: ${name}
 
 Email: ${email}
 
+Telephone: ${tel}
+
 Message:
+
 ${message}
+
+----------------------------------
+
+Sent through the school website.
+
             `
 
         });
 
-        // Respond to frontend
-        res.status(200).json({
+
+        // Successful response
+        return res.status(200).json({
+
             success: true,
+
             message: "Your message has been sent successfully!"
+
         });
+
 
     } catch (error) {
 
-        console.error("Email error:", error);
+        // Display error in Render logs
+        console.error("EMAIL ERROR:", error);
 
-        res.status(500).json({
+
+        return res.status(500).json({
+
             success: false,
+
             message: "Unable to send your message. Please try again later."
+
         });
 
     }
 
 });
 
+
 // ==========================================
-// START SERVER
+// 7. START SERVER
 // ==========================================
 
 const PORT = process.env.PORT || 3000;
@@ -117,8 +185,11 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
 
     console.log("================================");
+
     console.log("EPADR SCHOOL BACKEND IS RUNNING");
-    console.log(`http://localhost:${PORT}`);
+
+    console.log(`Server running on port ${PORT}`);
+
     console.log("================================");
 
 });

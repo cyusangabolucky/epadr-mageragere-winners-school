@@ -1,10 +1,13 @@
-
+```javascript
 // ==========================================
 // EPADR MAGERAGERE WINNERS SCHOOL
 // FRONTEND JAVASCRIPT
 // ==========================================
 
+
+// ==========================================
 // 1. MOBILE NAVIGATION
+// ==========================================
 
 const menuToggle = document.getElementById("menu-toggle");
 const nav = document.getElementById("nav");
@@ -37,7 +40,9 @@ if (menuToggle && nav) {
 }
 
 
+// ==========================================
 // 2. AUTOMATIC FOOTER YEAR
+// ==========================================
 
 const yearElement = document.getElementById("year");
 
@@ -48,7 +53,9 @@ if (yearElement) {
 }
 
 
+// ==========================================
 // 3. CONTACT FORM
+// ==========================================
 
 const contactForm = document.getElementById("contact-form");
 
@@ -66,66 +73,104 @@ if (contactForm) {
 
         const email = document.getElementById("email").value.trim();
 
-        const subject = document.getElementById("subject").value.trim();
+        const tel = document.getElementById("tel").value.trim();
 
         const message = document.getElementById("message").value.trim();
 
-        // Check empty fields
-        if (!name || !email || !message) {
 
-            formMessage.textContent = "Please fill in all required fields.";
+        // Check required fields
+        if (!name || !email || !tel || !message) {
+
+            formMessage.textContent =
+                "Please fill in all fields.";
 
             return;
 
         }
 
+
         // Show sending message
         formMessage.textContent = "Sending your message...";
 
+
+        // Get submit button
         const submitButton = contactForm.querySelector(
             'button[type="submit"]'
         );
 
         if (submitButton) {
+
             submitButton.disabled = true;
+
+            submitButton.textContent = "Sending...";
+
         }
+
 
         try {
 
-            // Send information to backend
-            const response = await fetch("https://epadr-mageragere-winners-school.onrender.com/api/contact", {
+            // Send information to Render backend
+            const response = await fetch(
+                "https://epadr-mageragere-winners-school.onrender.com/api/contact",
+                {
 
-                method: "POST",
+                    method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-                body: JSON.stringify({
+                    body: JSON.stringify({
 
-                    name,
-                    email,
-                    subject,
-                    message
+                        name: name,
+                        email: email,
+                        tel: tel,
+                        message: message
 
-                })
+                    })
 
-            });
+                }
+            );
 
-            // Read backend response
-            const result = await response.json();
 
-            if (!response.ok) {
+            // Read response as text first
+            const responseText = await response.text();
 
-                throw new Error(result.message);
+            let result;
+
+            try {
+
+                // Convert backend response into JSON
+                result = JSON.parse(responseText);
+
+            } catch (error) {
+
+                // Handle unexpected HTML or invalid JSON
+                throw new Error(
+                    "Server returned an invalid response. Please try again later."
+                );
 
             }
 
-            // Display success message
-            formMessage.textContent = result.message;
 
-            // Clear form
+            // Check if request was successful
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message || "Failed to send your message."
+                );
+
+            }
+
+
+            // Display success message
+            formMessage.textContent =
+                result.message || "Your message has been sent successfully!";
+
+
+            // Clear form after successful submission
             contactForm.reset();
+
 
         } catch (error) {
 
@@ -134,10 +179,16 @@ if (contactForm) {
             formMessage.textContent =
                 error.message || "Something went wrong. Please try again.";
 
+
         } finally {
 
+            // Enable button again
             if (submitButton) {
+
                 submitButton.disabled = false;
+
+                submitButton.textContent = "Send Message";
+
             }
 
         }
@@ -147,28 +198,38 @@ if (contactForm) {
 }
 
 
-// ===================================
-// AUTOMATIC TYPING AND ERASING
-// ===================================
+// ==========================================
+// 4. AUTOMATIC TYPING AND ERASING
+// ==========================================
 
 const typingText = document.getElementById("typing-text");
 
 const words = [
+
     "Welcome to EPADR MAGERAGERE WINNERS SCHOOL",
-    
+
     "Bright Education",
+
     "Bright Future",
+
     "Quality Education",
+
     "Developing Talents",
-    "Building tomorrow Leaders"
+
+    "Building Tomorrow's Leaders"
+
 ];
 
 let wordIndex = 0;
+
 let characterIndex = 0;
+
 let deleting = false;
+
 
 function typeEffect() {
 
+    // Stop if this page has no typing element
     if (!typingText) return;
 
     const currentWord = words[wordIndex];
@@ -186,14 +247,19 @@ function typeEffect() {
     typingText.textContent =
         currentWord.substring(0, characterIndex);
 
+
     let speed = deleting ? 50 : 100;
+
 
     if (!deleting && characterIndex === currentWord.length) {
 
         deleting = true;
+
         speed = 2500;
 
-    } else if (deleting && characterIndex === 0) {
+    }
+
+    else if (deleting && characterIndex === 0) {
 
         deleting = false;
 
@@ -203,17 +269,28 @@ function typeEffect() {
 
     }
 
+
     setTimeout(typeEffect, speed);
 
 }
 
-typeEffect();
 
-// AUTOMATIC IMAGE SLIDER
+// Start typing effect
+if (typingText) {
+
+    typeEffect();
+
+}
+
+
+// ==========================================
+// 5. AUTOMATIC IMAGE SLIDER
+// ==========================================
 
 const slides = document.querySelectorAll(".slide");
 
 let currentSlide = 0;
+
 
 function changeSlide() {
 
@@ -227,31 +304,57 @@ function changeSlide() {
 
 }
 
+
+// Change image every 4 seconds
 if (slides.length > 1) {
+
     setInterval(changeSlide, 4000);
+
 }
 
 
-// Get the back to top button
+// ==========================================
+// 6. BACK TO TOP BUTTON
+// ==========================================
+
 const backToTop = document.getElementById("backToTop");
 
-// Show button when scrolling down
-window.addEventListener("scroll", function () {
 
-    if (window.scrollY > 300) {
-        backToTop.style.display = "block";
-    } else {
-        backToTop.style.display = "none";
-    }
+if (backToTop) {
 
-});
+    // Show button when scrolling down
+    window.addEventListener("scroll", function () {
 
-// Scroll smoothly to the top
-backToTop.addEventListener("click", function () {
+        if (window.scrollY > 300) {
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+            backToTop.style.display = "block";
+
+        } else {
+
+            backToTop.style.display = "none";
+
+        }
+
     });
 
-});
+
+    // Scroll smoothly to the top
+    backToTop.addEventListener("click", function () {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    });
+
+}
+
+
+// ==========================================
+// END OF FRONTEND JAVASCRIPT
+// ==========================================
+```
